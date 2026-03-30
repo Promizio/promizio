@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Promizio — Create your account</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F0F0F'/><text y='.9em' font-size='72' x='12' fill='%2352B788' font-family='serif' font-weight='700'>P</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink:#0F0F0F; --sage:#2D6A4F; --sage-lt:#52B788; --sage-bg:#F0FAF4;
+  --warm:#F9F4EE; --sand:#E8E0D4; --white:#FFFFFF;
+  --gray:#6B6B6B; --gray-lt:#A8A8A8; --red:#DC2626;
+}
+body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--warm); color:var(--ink); min-height:100vh; display:flex; flex-direction:column; }
+nav { padding:1.25rem 2.5rem; display:flex; align-items:center; justify-content:space-between; background:var(--white); border-bottom:1px solid var(--sand); }
+.logo { font-family:'Fraunces',serif; font-size:1.4rem; font-weight:700; color:var(--ink); text-decoration:none; letter-spacing:-0.03em; }
+.logo span { color:var(--sage-lt); }
+.nav-link { font-size:0.875rem; color:var(--gray); text-decoration:none; }
+.nav-link:hover { color:var(--ink); }
+main { flex:1; display:flex; align-items:flex-start; justify-content:center; padding:2.5rem 2rem; }
+.container { width:100%; max-width:560px; }
+.progress { display:flex; align-items:center; margin-bottom:2.5rem; }
+.step-dot { display:flex; align-items:center; gap:8px; font-size:0.78rem; font-weight:500; color:var(--gray-lt); }
+.step-dot.active { color:var(--sage); }
+.step-dot.done { color:var(--sage-lt); }
+.dot { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:600; background:var(--sand); color:var(--gray-lt); flex-shrink:0; }
+.step-dot.active .dot { background:var(--sage); color:var(--white); }
+.step-dot.done .dot { background:var(--sage-lt); color:var(--white); }
+.step-line { flex:1; height:1px; background:var(--sand); margin:0 8px; }
+.step-line.done { background:var(--sage-lt); }
+.card { background:var(--white); border:1px solid var(--sand); border-radius:20px; padding:2.5rem; box-shadow:0 4px 24px rgba(0,0,0,0.06); }
+.card-title { font-family:'Fraunces',serif; font-size:1.75rem; font-weight:700; letter-spacing:-0.03em; margin-bottom:0.4rem; }
+.card-sub { font-size:0.875rem; color:var(--gray); margin-bottom:2rem; line-height:1.5; }
+.card-sub a { color:var(--sage); text-decoration:none; font-weight:500; }
+.field { margin-bottom:1.25rem; }
+.field-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.25rem; }
+label { display:block; font-size:0.8rem; font-weight:600; margin-bottom:0.4rem; color:var(--ink); }
+.hint { font-weight:400; color:var(--gray-lt); margin-left:4px; }
+input[type="email"],input[type="text"],input[type="url"],input[type="password"],select,textarea {
+  width:100%; padding:0.85rem 1rem; border:1.5px solid var(--sand); border-radius:10px;
+  font-family:'Plus Jakarta Sans',sans-serif; font-size:0.9rem; color:var(--ink); background:var(--white);
+  outline:none; transition:border-color 0.2s; appearance:none;
+}
+input:focus,select:focus,textarea:focus { border-color:var(--sage-lt); }
+textarea { resize:vertical; min-height:90px; line-height:1.5; }
+select {
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B6B6B' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 1rem center; padding-right:2.5rem;
+}
+.pw-wrap { position:relative; }
+.pw-wrap input { padding-right:3rem; }
+.pw-toggle { position:absolute; right:1rem; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; padding:0; color:var(--gray-lt); font-size:1rem; line-height:1; transition:color 0.2s; }
+.pw-toggle:hover { color:var(--ink); }
+.pw-bars { display:flex; gap:4px; margin-top:6px; margin-bottom:3px; }
+.pw-bar { height:3px; flex:1; border-radius:2px; background:var(--sand); transition:background 0.2s; }
+.pw-lbl { font-size:0.72rem; color:var(--gray-lt); }
+.check-group { display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; }
+.check-item { display:flex; align-items:center; gap:8px; padding:0.7rem 0.9rem; border:1.5px solid var(--sand); border-radius:8px; cursor:pointer; transition:all 0.15s; font-size:0.85rem; user-select:none; }
+.check-item:hover { border-color:var(--sage-lt); background:var(--sage-bg); }
+.check-item.checked { border-color:var(--sage); background:var(--sage-bg); color:var(--sage); font-weight:500; }
+.btn { width:100%; padding:0.9rem; background:var(--sage); color:var(--white); border:none; border-radius:10px; font-family:'Plus Jakarta Sans',sans-serif; font-size:0.95rem; font-weight:600; cursor:pointer; transition:all 0.2s; margin-top:0.5rem; }
+.btn:hover { background:var(--sage-lt); color:var(--ink); }
+.btn:disabled { opacity:0.6; cursor:not-allowed; }
+.btn-back { width:100%; padding:0.9rem; background:transparent; color:var(--gray); border:1.5px solid var(--sand); border-radius:10px; font-family:'Plus Jakarta Sans',sans-serif; font-size:0.95rem; font-weight:500; cursor:pointer; transition:all 0.2s; margin-top:0.75rem; }
+.btn-back:hover { border-color:var(--ink); color:var(--ink); }
+
+/* Give items */
+.give-item { border:1.5px solid rgba(45,106,79,0.2); border-radius:10px; overflow:hidden; margin-bottom:8px; background:var(--white); }
+.give-item.active { border-color:#2D6A4F; }
+.give-toggle { display:flex; align-items:center; gap:10px; padding:0.75rem 1rem; cursor:pointer; transition:background 0.15s; }
+.give-toggle:hover { background:#F0FAF4; }
+.give-item.active .give-toggle { background:#F0FAF4; }
+.give-icon { font-size:1.1rem; flex-shrink:0; }
+.give-text { flex:1; }
+.give-text strong { display:block; font-size:0.875rem; font-weight:600; color:var(--ink); }
+.give-text span { font-size:0.78rem; color:var(--gray); }
+.give-check { width:24px; height:24px; border-radius:50%; border:2px solid #9FE1CB; display:flex; align-items:center; justify-content:center; font-size:0.9rem; color:#9FE1CB; font-weight:700; flex-shrink:0; transition:all 0.2s; }
+.give-item.active .give-check { background:#2D6A4F; border-color:#2D6A4F; color:var(--white); content:'✓'; }
+.give-detail { padding:0 1rem 0.9rem; }
+.give-detail label { font-size:0.78rem; font-weight:600; color:#2D6A4F; margin-bottom:0.35rem; }
+.give-volume { width:100%; padding:0.6rem 0.75rem; border:1.5px solid #9FE1CB; border-radius:8px; font-family:'Plus Jakarta Sans',sans-serif; font-size:0.85rem; color:var(--ink); background:var(--white); outline:none; appearance:none; }
+
+/* Want items */
+.want-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.want-item { display:flex; align-items:center; gap:8px; padding:0.7rem 0.9rem; border:1.5px solid rgba(196,92,38,0.2); border-radius:8px; cursor:pointer; transition:all 0.15s; font-size:0.85rem; color:var(--ink); background:var(--white); user-select:none; }
+.want-item:hover { border-color:#EE9B00; background:#FFFBEB; }
+.want-item.selected { border-color:#C45C26; background:#FEF3E2; color:#7C2D12; font-weight:500; }
+.want-icon { font-size:1rem; flex-shrink:0; }
+.msg { display:none; border-radius:8px; padding:0.75rem 1rem; font-size:0.85rem; margin-bottom:1rem; }
+.msg-error { background:#FEF2F2; border:1px solid #FECACA; color:var(--red); }
+.msg-info  { background:var(--sage-bg); border:1px solid rgba(45,106,79,0.2); color:var(--sage); }
+.step-panel { display:none; }
+.step-panel.active { display:block; }
+.terms { font-size:0.78rem; color:var(--gray); margin-top:1rem; line-height:1.6; text-align:center; }
+.terms a { color:var(--sage); text-decoration:none; }
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">Promiz<span>io</span></a>
+  <a href="/login.html" class="nav-link">Already have an account? Log in</a>
+</nav>
+<main>
+  <div class="container">
+    <div class="progress">
+      <div class="step-dot active" id="dot-1"><div class="dot">1</div><span>Account</span></div>
+      <div class="step-line" id="line-1"></div>
+      <div class="step-dot" id="dot-2"><div class="dot">2</div><span>Business</span></div>
+      <div class="step-line" id="line-2"></div>
+      <div class="step-dot" id="dot-3"><div class="dot">3</div><span>Audience</span></div>
+      <div class="step-line" id="line-3"></div>
+      <div class="step-dot" id="dot-4"><div class="dot">4</div><span>Done</span></div>
+    </div>
+    <div class="card">
+      <div class="msg msg-error" id="err"></div>
+      <div class="msg msg-info"  id="inf"></div>
+
+      <!-- STEP 1 -->
+      <div class="step-panel active" id="step-1">
+        <h1 class="card-title">Create your account.</h1>
+        <p class="card-sub">Already have one? <a href="/login.html">Log in here</a></p>
+        <div class="field">
+          <label>Email address</label>
+          <input type="email" id="s1-email" placeholder="you@yourcompany.com" autocomplete="email">
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <div class="pw-wrap">
+            <input type="password" id="s1-pw" placeholder="Min. 8 characters" autocomplete="new-password" oninput="checkPw(this.value)">
+            <button type="button" class="pw-toggle" onclick="togglePw('s1-pw',this)">👁</button>
+          </div>
+          <div class="pw-bars">
+            <div class="pw-bar" id="b1"></div><div class="pw-bar" id="b2"></div>
+            <div class="pw-bar" id="b3"></div><div class="pw-bar" id="b4"></div>
+          </div>
+          <div class="pw-lbl" id="pw-lbl">Enter a password</div>
+        </div>
+        <button class="btn" id="s1-btn" onclick="step1()">Continue →</button>
+        <p class="terms">By signing up you agree to our <a href="/terms.html" target="_blank">Terms of Service</a> and <a href="/privacy.html" target="_blank">Privacy Policy</a>.</p>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step-panel" id="step-2">
+        <h1 class="card-title">Tell us about your business.</h1>
+        <p class="card-sub">This helps us find you the right partners.</p>
+        <div class="field">
+          <label>Business name</label>
+          <input type="text" id="biz-name" placeholder="e.g. YogaStudio Copenhagen">
+        </div>
+        <div class="field-row">
+          <div>
+            <label>Main category</label>
+            <select id="biz-cat" onchange="loadSubs()"><option value="">Select...</option></select>
+          </div>
+          <div>
+            <label>Subcategory</label>
+            <select id="biz-sub"><option value="">Select...</option></select>
+          </div>
+        </div>
+        <div class="field">
+          <label>How do you sell?</label>
+          <select id="biz-type">
+            <option value="local">Local / physical only</option>
+            <option value="ecommerce">E-commerce / online only</option>
+            <option value="both">Both — physical + online</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Website <span class="hint">(optional)</span></label>
+          <input type="url" id="biz-web" placeholder="https://yourwebsite.com">
+        </div>
+        <div class="field">
+          <label>Short description <span class="hint">(optional)</span></label>
+          <textarea id="biz-desc" placeholder="What do you sell and who are your customers?"></textarea>
+        </div>
+        <button class="btn" id="s2-btn" onclick="step2()">Continue →</button>
+        <button class="btn-back" onclick="goTo(1)">← Back</button>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step-panel" id="step-3">
+        <h1 class="card-title">What can you offer — and what do you need?</h1>
+        <p class="card-sub">This is how we find your perfect match. Be honest — there are no wrong answers.</p>
+
+        <!-- GIVE section -->
+        <div style="background:#F0FAF4;border:1.5px solid #9FE1CB;border-radius:14px;padding:1.25rem;margin-bottom:1.25rem;">
+          <div style="font-size:0.8rem;font-weight:700;color:#085041;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.25rem;">What you can GIVE a partner</div>
+          <div style="font-size:0.8rem;color:#2D6A4F;margin-bottom:1rem;">Select everything you can offer. Add volume where relevant.</div>
+
+          <div id="give-options">
+            <div class="give-item" data-key="give_inbox">
+              <div class="give-toggle" onclick="toggleGive(this)">
+                <span class="give-icon">📦</span>
+                <div class="give-text">
+                  <strong>Space in my boxes</strong>
+                  <span>A partner can insert a sample, flyer or card in my parcels</span>
+                </div>
+                <div class="give-check">+</div>
+              </div>
+              <div class="give-detail" style="display:none;">
+                <label>How many parcels do you ship per month?</label>
+                <select class="give-volume">
+                  <option value="">Select approximate volume...</option>
+                  <option value="1-50">1–50 parcels/month</option>
+                  <option value="50-200">50–200 parcels/month</option>
+                  <option value="200-500">200–500 parcels/month</option>
+                  <option value="500-1000">500–1,000 parcels/month</option>
+                  <option value="1000+">1,000+ parcels/month</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="give-item" data-key="give_samples">
+              <div class="give-toggle" onclick="toggleGive(this)">
+                <span class="give-icon">🎁</span>
+                <div class="give-text">
+                  <strong>Physical samples to distribute</strong>
+                  <span>I have samples I want distributed through a partner's boxes</span>
+                </div>
+                <div class="give-check">+</div>
+              </div>
+              <div class="give-detail" style="display:none;">
+                <label>How many samples do you have available?</label>
+                <select class="give-volume">
+                  <option value="">Select quantity...</option>
+                  <option value="1-50">1–50 samples</option>
+                  <option value="50-200">50–200 samples</option>
+                  <option value="200-500">200–500 samples</option>
+                  <option value="500+">500+ samples</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="give-item" data-key="give_email">
+              <div class="give-toggle" onclick="toggleGive(this)">
+                <span class="give-icon">📧</span>
+                <div class="give-text">
+                  <strong>Email newsletter mention</strong>
+                  <span>I can feature a partner in my email list</span>
+                </div>
+                <div class="give-check">+</div>
+              </div>
+              <div class="give-detail" style="display:none;">
+                <label>How many email subscribers do you have?</label>
+                <select class="give-volume">
+                  <option value="">Select list size...</option>
+                  <option value="0-500">Under 500</option>
+                  <option value="500-2000">500–2,000</option>
+                  <option value="2000-10000">2,000–10,000</option>
+                  <option value="10000+">10,000+</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="give-item" data-key="give_social">
+              <div class="give-toggle" onclick="toggleGive(this)">
+                <span class="give-icon">📱</span>
+                <div class="give-text">
+                  <strong>Social media shoutout</strong>
+                  <span>I can post about a partner on my social channels</span>
+                </div>
+                <div class="give-check">+</div>
+              </div>
+              <div class="give-detail" style="display:none;">
+                <label>Total combined followers across your channels</label>
+                <select class="give-volume">
+                  <option value="">Select follower count...</option>
+                  <option value="0-1000">Under 1,000</option>
+                  <option value="1000-5000">1,000–5,000</option>
+                  <option value="5000-20000">5,000–20,000</option>
+                  <option value="20000+">20,000+</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="give-item" data-key="give_coupon">
+              <div class="give-toggle" onclick="toggleGive(this)">
+                <span class="give-icon">🎟️</span>
+                <div class="give-text">
+                  <strong>Coupon code in my packaging</strong>
+                  <span>I can include a partner's discount code in my orders</span>
+                </div>
+                <div class="give-check">+</div>
+              </div>
+              <div class="give-detail" style="display:none;"></div>
+            </div>
+
+            <div class="give-item" data-key="give_instore">
+              <div class="give-toggle" onclick="toggleGive(this)">
+                <span class="give-icon">🏪</span>
+                <div class="give-text">
+                  <strong>In-store or at-location promotion</strong>
+                  <span>I can display or hand out partner materials at my physical location</span>
+                </div>
+                <div class="give-check">+</div>
+              </div>
+              <div class="give-detail" style="display:none;">
+                <label>Average monthly footfall / visitors</label>
+                <select class="give-volume">
+                  <option value="">Select footfall...</option>
+                  <option value="0-100">Under 100/month</option>
+                  <option value="100-500">100–500/month</option>
+                  <option value="500-2000">500–2,000/month</option>
+                  <option value="2000+">2,000+/month</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- WANT section -->
+        <div style="background:#FAEEDA;border:1.5px solid #FAC775;border-radius:14px;padding:1.25rem;margin-bottom:1.25rem;">
+          <div style="font-size:0.8rem;font-weight:700;color:#633806;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.25rem;">What you WANT from a partner</div>
+          <div style="font-size:0.8rem;color:#854F0B;margin-bottom:1rem;">What would help your business most? Select all that apply.</div>
+
+          <div class="want-grid">
+            <div class="want-item" onclick="this.classList.toggle('selected')" data-key="want_inbox">
+              <span class="want-icon">📦</span>
+              <span>Space in their boxes</span>
+            </div>
+            <div class="want-item" onclick="this.classList.toggle('selected')" data-key="want_samples">
+              <span class="want-icon">🎁</span>
+              <span>Distribute my samples</span>
+            </div>
+            <div class="want-item" onclick="this.classList.toggle('selected')" data-key="want_email">
+              <span class="want-icon">📧</span>
+              <span>Email mention</span>
+            </div>
+            <div class="want-item" onclick="this.classList.toggle('selected')" data-key="want_social">
+              <span class="want-icon">📱</span>
+              <span>Social shoutout</span>
+            </div>
+            <div class="want-item" onclick="this.classList.toggle('selected')" data-key="want_coupon">
+              <span class="want-icon">🎟️</span>
+              <span>Coupon in their orders</span>
+            </div>
+            <div class="want-item" onclick="this.classList.toggle('selected')" data-key="want_instore">
+              <span class="want-icon">🏪</span>
+              <span>In-store promotion</span>
+            </div>
+            <div class="want-item" onclick="this.classList.toggle('selected')" data-key="want_traffic">
+              <span class="want-icon">🔗</span>
+              <span>Website traffic / referrals</span>
+            </div>
+            <div class="want-item" onclick="this.classList.toggle('selected')" data-key="want_content">
+              <span class="want-icon">✍️</span>
+              <span>Co-branded content</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn" id="s3-btn" onclick="step3()">Finish setup →</button>
+        <button class="btn-back" onclick="goTo(2)">← Back</button>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="step-panel" id="step-4">
+        <div style="text-align:center;padding:1rem 0;">
+          <div style="font-size:3rem;margin-bottom:1rem;">🎉</div>
+          <h1 class="card-title" style="margin-bottom:0.75rem;">You're all set!</h1>
+          <p style="font-size:0.95rem;color:var(--gray);line-height:1.6;margin-bottom:2rem;">
+            Your business profile is live. We're already looking for your first matches.
+          </p>
+          <button class="btn" style="max-width:280px;margin:0 auto;" onclick="window.location.href='/dashboard.html'">Go to dashboard →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+const SB_URL = 'https://usewjkpcpionmapqxvoz.supabase.co';
+const SB_KEY = 'sb_publishable_60i4tQGeBhRNwwtImJ8SRQ_F-9doWcY';
+let sb;
+
+// Load Supabase from CDN
+(function() {
+  var s = document.createElement('script');
+  s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js';
+  s.onload = function() {
+    sb = window.supabase.createClient(SB_URL, SB_KEY);
+    sb.auth.getSession().then(function(r) {
+      if (r.data && r.data.session) window.location.href = '/dashboard.html';
+    });
+    initCats();
+  };
+  s.onerror = function() { showErr('Could not load authentication library. Please refresh the page.'); };
+  document.head.appendChild(s);
+})();
+
+var CATS = {
+  'Fashion & Apparel':['Women\'s Clothing','Men\'s Clothing','Children\'s Clothing','Activewear & Sports Fashion','Sustainable & Ethical Fashion','Shoes & Footwear','Bags & Accessories','Jewellery & Watches','Lingerie & Swimwear','Vintage & Secondhand'],
+  'Beauty & Personal Care':['Skincare','Haircare','Makeup & Cosmetics','Natural & Organic Beauty','Perfume & Fragrance','Nail Care','Men\'s Grooming','Beauty Salons & Spas','Tattoo & Piercing'],
+  'Home & Interior':['Furniture','Lighting & Lamps','Home Décor & Accessories','Textiles & Soft Furnishings','Kitchen & Dining','Bathroom & Wellness','Storage & Organisation','Art & Prints','Plants & Botanicals','Candles & Scents','Sustainable Home Products'],
+  'Food & Drink':['Organic & Natural Food','Specialty Coffee & Tea','Wine, Beer & Spirits','Chocolate & Confectionery','Snacks & Health Foods','Meal Kits & Subscription Boxes','Bakeries & Pastries','Restaurants & Cafes','Catering & Events','Vegan & Plant-Based','Grocery & Delicatessen'],
+  'Health & Wellness':['Yoga & Pilates','Gym & Personal Training','Nutrition & Supplements','Mental Health & Therapy','Meditation & Mindfulness','Physiotherapy & Rehabilitation','Alternative Medicine','Dental & Oral Care','Opticians & Eyewear','Pharmacy & Health Products','Massage & Body Treatments','Sleep & Recovery'],
+  'Sports & Outdoors':['Running & Cycling','Outdoor & Hiking','Water Sports','Team Sports','Fitness Equipment','Golf','Winter Sports','Martial Arts'],
+  'Family & Children':['Toys & Games','Baby & Toddler Products','Children\'s Books & Education','Maternity & Pregnancy','Childcare & Nurseries','Family Activities & Days Out','School Supplies'],
+  'Pets':['Dog Products & Services','Cat Products & Services','Pet Food & Nutrition','Veterinary Services','Pet Grooming','Other Pet Care'],
+  'Travel & Experiences':['Hotels & Accommodation','Travel Agencies & Tours','Experiences & Activities','City Guides & Tourism','Luggage & Travel Accessories','Car Rental & Transport'],
+  'Education & Learning':['Online Courses & E-learning','Language Learning','Kids\' Education','Professional Development','Tutoring & Coaching','Books & Publishing','Music Lessons & Instruments','Arts & Crafts Classes'],
+  'Creative & Arts':['Photography','Graphic Design','Illustration & Art','Music & Audio','Film & Video','Writing & Content','Crafts & Handmade Goods','Stationery & Paper Goods'],
+  'Technology & Gadgets':['Consumer Electronics','Smart Home','Software & Apps','Gaming','Photography Equipment','Accessories & Peripherals'],
+  'Business Services':['Marketing & Communications','Accounting & Finance','Legal Services','HR & Recruitment','IT & Tech Support','Consulting & Strategy','Printing & Design','Office Supplies','Co-working Spaces'],
+  'Sustainability & Eco':['Zero Waste Products','Sustainable Fashion','Eco Home & Living','Green Energy','Upcycling & Repair','Ethical & Fair Trade'],
+  'Events & Entertainment':['Event Planning & Venues','Wedding Services','Party Supplies','Photography & Videography','Entertainment & Performers','Ticketing & Experiences'],
+  'Automotive':['Car Sales & Leasing','Car Accessories & Parts','Service & Repair','Electric Vehicles','Car Wash & Detailing'],
+  'Real Estate & Home Services':['Property Sales & Rental','Interior Design & Styling','Cleaning Services','Moving & Storage','Renovation & Construction','Gardening & Landscaping','Security & Smart Home']
+};
+
+function initCats() {
+  var sel = document.getElementById('biz-cat');
+  Object.keys(CATS).forEach(function(c) {
+    var o = document.createElement('option'); o.value = o.textContent = c; sel.appendChild(o);
+  });
+}
+
+function loadSubs() {
+  var cat = document.getElementById('biz-cat').value;
+  var sub = document.getElementById('biz-sub');
+  sub.innerHTML = '<option value="">Select...</option>';
+  (CATS[cat]||[]).forEach(function(s) { var o=document.createElement('option'); o.value=o.textContent=s; sub.appendChild(o); });
+}
+
+function togglePw(id, btn) {
+  var i = document.getElementById(id);
+  i.type = i.type==='password' ? 'text' : 'password';
+  btn.textContent = i.type==='password' ? '👁' : '🙈';
+}
+
+function checkPw(v) {
+  var cols=['#DC2626','#F59E0B','#3B82F6','#52B788'], lbls=['Too short','Weak','Good','Strong'];
+  var s=0;
+  if(v.length>=8)s++; if(/[A-Z]/.test(v))s++; if(/[0-9]/.test(v))s++; if(/[^A-Za-z0-9]/.test(v))s++;
+  for(var i=1;i<=4;i++) document.getElementById('b'+i).style.background = i<=s ? cols[s-1] : 'var(--sand)';
+  var l=document.getElementById('pw-lbl');
+  l.textContent = v.length===0 ? 'Enter a password' : (lbls[s-1]||'Too short');
+  l.style.color  = v.length===0 ? 'var(--gray-lt)' : cols[s-1];
+}
+
+function showErr(m) { var e=document.getElementById('err'); e.textContent=m; e.style.display='block'; document.getElementById('inf').style.display='none'; }
+function showInf(m) { var e=document.getElementById('inf'); e.textContent=m; e.style.display='block'; document.getElementById('err').style.display='none'; }
+function hideMsg()  { document.getElementById('err').style.display='none'; document.getElementById('inf').style.display='none'; }
+
+function goTo(n) {
+  document.querySelectorAll('.step-panel').forEach(function(p){p.classList.remove('active');});
+  document.getElementById('step-'+n).classList.add('active');
+  hideMsg();
+  for(var i=1;i<=4;i++) {
+    var d=document.getElementById('dot-'+i); d.classList.remove('active','done');
+    if(i<n)d.classList.add('done'); if(i===n)d.classList.add('active');
+  }
+  for(var i=1;i<=3;i++) document.getElementById('line-'+i).classList.toggle('done',i<n);
+  window.scrollTo(0,0);
+}
+
+async function step1() {
+  hideMsg();
+  if(!sb){showErr('Still loading — please wait a second and try again.');return;}
+  var email = document.getElementById('s1-email').value.trim();
+  var pw    = document.getElementById('s1-pw').value;
+  if(!email||!email.includes('@')){showErr('Please enter a valid email address.');return;}
+  if(pw.length<8){showErr('Password must be at least 8 characters.');return;}
+  var btn=document.getElementById('s1-btn'); btn.textContent='Creating account...'; btn.disabled=true;
+  try {
+    var r = await sb.auth.signUp({email:email, password:pw});
+    if(r.error){
+      if(r.error.message.toLowerCase().includes('already')){
+        showErr('This email is already registered. Try logging in instead.');
+      } else {
+        showErr(r.error.message);
+      }
+      btn.textContent='Continue →'; btn.disabled=false; return;
+    }
+    if(r.data && r.data.user && !r.data.session){
+      showInf('Check your email to confirm your account, then return here to continue.');
+      btn.textContent='Continue →'; btn.disabled=false; return;
+    }
+    goTo(2);
+  } catch(e) {
+    showErr('Something went wrong: '+e.message);
+    btn.textContent='Continue →'; btn.disabled=false;
+  }
+}
+
+async function step2() {
+  hideMsg();
+  var name=document.getElementById('biz-name').value.trim();
+  var cat =document.getElementById('biz-cat').value;
+  if(!name){showErr('Please enter your business name.');return;}
+  if(!cat) {showErr('Please select a category.');return;}
+  var btn=document.getElementById('s2-btn'); btn.textContent='Saving...'; btn.disabled=true;
+  try {
+    var u=(await sb.auth.getUser()).data.user;
+    if(!u){showErr('Session expired — please go back to step 1.');btn.textContent='Continue →';btn.disabled=false;return;}
+    var slug=name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+    var r=await sb.from('businesses').update({
+      name:name, slug:slug, category:cat,
+      subcategory:document.getElementById('biz-sub').value||null,
+      business_type:document.getElementById('biz-type').value,
+      website:document.getElementById('biz-web').value.trim()||null,
+      description:document.getElementById('biz-desc').value.trim()||null
+    }).eq('user_id',u.id);
+    if(r.error){showErr('Save failed: '+r.error.message);btn.textContent='Continue →';btn.disabled=false;return;}
+    goTo(3);
+  } catch(e){showErr('Something went wrong: '+e.message);btn.textContent='Continue →';btn.disabled=false;}
+}
+
+function toggleGive(toggleEl) {
+  var item = toggleEl.closest('.give-item');
+  var detail = item.querySelector('.give-detail');
+  var check = item.querySelector('.give-check');
+  var active = item.classList.toggle('active');
+  detail.style.display = active ? 'block' : 'none';
+  check.textContent = active ? '✓' : '+';
+}
+
+async function step3() {
+  hideMsg();
+
+  // Collect give data
+  var gives = [];
+  document.querySelectorAll('.give-item.active').forEach(function(item) {
+    var key = item.getAttribute('data-key');
+    var vol = item.querySelector('.give-volume');
+    gives.push({ type: key, volume: vol ? vol.value : '' });
+  });
+
+  // Collect want data
+  var wants = [];
+  document.querySelectorAll('.want-item.selected').forEach(function(item) {
+    wants.push(item.getAttribute('data-key'));
+  });
+
+  if (gives.length === 0 && wants.length === 0) {
+    showErr('Please select at least one thing you can offer or one thing you need.');
+    return;
+  }
+
+  var btn = document.getElementById('s3-btn');
+  btn.textContent = 'Finishing...'; btn.disabled = true;
+
+  try {
+    var u = (await sb.auth.getUser()).data.user;
+    if (!u) { showErr('Session expired — please go back to step 1.'); btn.textContent = 'Finish setup →'; btn.disabled = false; return; }
+
+    var r = await sb.from('businesses').update({
+      promo_types: gives.map(function(g) { return g.type; }),
+      give_details: gives,
+      want_types: wants,
+      status: 'active',
+      onboarded_at: new Date().toISOString()
+    }).eq('user_id', u.id);
+
+    if (r.error) {
+      // If give_details/want_types columns don't exist yet, save without them
+      var r2 = await sb.from('businesses').update({
+        promo_types: gives.map(function(g) { return g.type; }),
+        status: 'active',
+        onboarded_at: new Date().toISOString()
+      }).eq('user_id', u.id);
+      if (r2.error) { showErr('Save failed: ' + r2.error.message); btn.textContent = 'Finish setup →'; btn.disabled = false; return; }
+    }
+
+    goTo(4);
+  } catch(e) {
+    showErr('Something went wrong: ' + e.message);
+    btn.textContent = 'Finish setup →'; btn.disabled = false;
+  }
+}
+</script>
+</body>
+</html>
