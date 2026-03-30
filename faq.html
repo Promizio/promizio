@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Promizio — Frequently Asked Questions</title>
+<meta name="description" content="Answers to the most common questions about Promizio — the cross-promotion platform for growing businesses.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F0F0F'/><text y='.9em' font-size='72' x='12' fill='%2352B788' font-family='serif' font-weight='700'>P</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--ink:#0F0F0F;--sage:#2D6A4F;--sage-lt:#52B788;--sage-bg:#F0FAF4;--warm:#F9F4EE;--sand:#E8E0D4;--white:#FFFFFF;--gray:#6B6B6B;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--warm);color:var(--ink);}
+nav{padding:1.25rem 2.5rem;display:flex;align-items:center;justify-content:space-between;background:var(--white);border-bottom:1px solid var(--sand);position:sticky;top:0;z-index:10;}
+.logo{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-0.03em;}
+.logo span{color:var(--sage-lt);}
+.nav-link{font-size:0.875rem;color:var(--gray);text-decoration:none;}
+.nav-link:hover{color:var(--ink);}
+.nav-cta{background:var(--sage);color:var(--white)!important;padding:0.5rem 1.25rem;border-radius:100px;font-weight:500;}
+.nav-cta:hover{background:var(--sage-lt)!important;color:var(--ink)!important;}
+
+/* Hero */
+.hero{background:var(--ink);padding:5rem 2.5rem 4rem;text-align:center;}
+.hero-tag{font-size:0.72rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--sage-lt);margin-bottom:1rem;display:block;}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;color:var(--white);letter-spacing:-0.03em;margin-bottom:1rem;}
+.hero p{font-size:1rem;color:rgba(255,255,255,0.5);max-width:500px;margin:0 auto 2rem;}
+.search-wrap{max-width:460px;margin:0 auto;position:relative;}
+.search-wrap input{width:100%;padding:0.9rem 1.25rem 0.9rem 3rem;border-radius:100px;border:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.9rem;outline:none;background:rgba(255,255,255,0.1);color:var(--white);}
+.search-wrap input::placeholder{color:rgba(255,255,255,0.3);}
+.search-wrap input:focus{background:rgba(255,255,255,0.15);}
+.search-icon{position:absolute;left:1.1rem;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.3);font-size:1rem;}
+
+/* Layout */
+main{max-width:860px;margin:0 auto;padding:4rem 2rem;}
+
+/* Category tabs */
+.cats{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:2.5rem;}
+.cat-btn{padding:0.45rem 1rem;border-radius:100px;border:1.5px solid var(--sand);background:transparent;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.8rem;font-weight:500;color:var(--gray);cursor:pointer;transition:all 0.15s;}
+.cat-btn:hover{border-color:var(--sage-lt);color:var(--sage);}
+.cat-btn.active{background:var(--sage);border-color:var(--sage);color:var(--white);}
+
+/* FAQ sections */
+.faq-section{margin-bottom:2.5rem;}
+.faq-section-title{font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--sage);margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1.5px solid var(--sage-bg);}
+
+/* FAQ items */
+.faq-item{background:var(--white);border:0.5px solid var(--sand);border-radius:14px;margin-bottom:8px;overflow:hidden;transition:box-shadow 0.15s;}
+.faq-item:hover{box-shadow:0 2px 12px rgba(0,0,0,0.06);}
+.faq-item.open{border-color:var(--sage-lt);}
+.faq-q{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.25rem;cursor:pointer;gap:1rem;user-select:none;}
+.faq-q-text{font-size:0.95rem;font-weight:500;color:var(--ink);line-height:1.4;}
+.faq-item.open .faq-q-text{color:var(--sage);}
+.faq-icon{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--sand);display:flex;align-items:center;justify-content:center;font-size:0.9rem;color:var(--gray);flex-shrink:0;transition:all 0.2s;}
+.faq-item.open .faq-icon{background:var(--sage);border-color:var(--sage);color:var(--white);}
+.faq-a{display:none;padding:0 1.25rem 1.25rem;font-size:0.9rem;color:var(--gray);line-height:1.75;}
+.faq-item.open .faq-a{display:block;}
+.faq-a a{color:var(--sage);text-decoration:none;}
+.faq-a a:hover{text-decoration:underline;}
+.faq-a strong{color:var(--ink);font-weight:500;}
+
+/* No results */
+.no-results{text-align:center;padding:3rem;color:var(--gray);display:none;}
+.no-results h3{font-size:1rem;font-weight:500;margin-bottom:0.5rem;}
+
+/* CTA */
+.cta-box{background:var(--ink);border-radius:20px;padding:3rem 2.5rem;text-align:center;margin-top:3rem;}
+.cta-box h2{font-family:'Fraunces',serif;font-size:1.75rem;font-weight:700;color:var(--white);letter-spacing:-0.03em;margin-bottom:0.75rem;}
+.cta-box p{font-size:0.95rem;color:rgba(255,255,255,0.5);margin-bottom:1.75rem;}
+.btn-cta{display:inline-block;padding:0.9rem 2rem;background:var(--sage-lt);color:var(--ink);border-radius:100px;font-weight:600;font-size:0.95rem;text-decoration:none;transition:all 0.2s;}
+.btn-cta:hover{background:var(--white);}
+.still-stuck{margin-top:1.25rem;font-size:0.85rem;color:rgba(255,255,255,0.35);}
+.still-stuck a{color:var(--sage-lt);text-decoration:none;}
+.still-stuck a:hover{text-decoration:underline;}
+
+footer{background:var(--ink);color:rgba(255,255,255,0.3);padding:2rem 2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-size:0.78rem;margin-top:0;}
+.foot-logo{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:700;color:var(--white);}
+.foot-logo span{color:var(--sage-lt);}
+footer a{color:rgba(255,255,255,0.3);text-decoration:none;}
+footer a:hover{color:var(--sage-lt);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">Promiz<span>io</span></a>
+  <div style="display:flex;gap:1.5rem;align-items:center;">
+    <a href="/#how" class="nav-link">How it works</a>
+    <a href="/#pricing" class="nav-link">Pricing</a>
+    <a href="/signup.html" class="nav-link nav-cta">Get started</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <span class="hero-tag">Help centre</span>
+  <h1>Frequently asked questions.</h1>
+  <p>Everything you need to know about Promizio. Can't find your answer? Email us.</p>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="search-input" placeholder="Search questions..." oninput="filterFAQ(this.value)">
+  </div>
+</div>
+
+<main>
+  <div class="cats">
+    <button class="cat-btn active" onclick="filterCat('all', this)">All questions</button>
+    <button class="cat-btn" onclick="filterCat('getting-started', this)">Getting started</button>
+    <button class="cat-btn" onclick="filterCat('matching', this)">Matching</button>
+    <button class="cat-btn" onclick="filterCat('campaigns', this)">Campaigns</button>
+    <button class="cat-btn" onclick="filterCat('pricing', this)">Pricing</button>
+    <button class="cat-btn" onclick="filterCat('trust', this)">Trust & safety</button>
+    <button class="cat-btn" onclick="filterCat('technical', this)">Technical</button>
+  </div>
+
+  <div id="no-results" class="no-results">
+    <h3>No results found</h3>
+    <p>Try different keywords or <a href="mailto:hello@promizio.com">email us directly</a>.</p>
+  </div>
+
+  <!-- ================================================================
+       EDIT GUIDE FOR MALOU:
+       - To add a question: copy one <div class="faq-item"> block and paste it
+       - To edit a question: find the text between <div class="faq-q-text"> tags
+       - To edit an answer: find the text between <div class="faq-a"> tags
+       - To add a new category: add a new <div class="faq-section"> block
+       - The data-cat attribute controls which category filter shows this item
+       - data-cat options: getting-started | matching | campaigns | pricing | trust | technical
+       ================================================================ -->
+
+  <!-- GETTING STARTED -->
+  <div class="faq-section" data-section="getting-started">
+    <div class="faq-section-title">Getting started</div>
+
+    <div class="faq-item" data-cat="getting-started">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">What is Promizio?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        Promizio is a matchmaking platform that connects non-competing businesses to promote each other's products and services to shared audiences. Think of it as a smarter, cheaper alternative to paid advertising — instead of buying reach, you earn it by partnering with businesses your customers already trust.
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="getting-started">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">Who is Promizio for?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        Promizio is built for two types of businesses: <strong>e-commerce brands</strong> that ship physical orders and want to use their packaging as a marketing channel, and <strong>local or service businesses</strong> that want to reach new customers through trusted partner brands. If you have an audience — even a small one — you have something valuable to offer a partner.
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="getting-started">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">How do I get started?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        <a href="/signup.html">Create a free account</a>, fill in your business profile (takes under 5 minutes), and tell us what you can offer partners and what you're looking for in return. We'll then suggest compatible matches based on your audience, category, and promotion preferences.
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="getting-started">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">Do I need a large audience to join?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        No. Promizio works at any scale. A business shipping 50 parcels a month can still offer meaningful value to a partner whose customers would love their product. What matters most is audience <strong>relevance</strong>, not size. A highly targeted list of 500 subscribers is often more valuable for cross-promotion than a generic list of 50,000.
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="getting-started">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">Is Promizio free to use?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        Yes — our Starter plan is free forever and includes up to 3 matches per month and access to the basic campaign builder. Paid plans (Growth at €49/month and Pro at €149/month) unlock unlimited matches, full analytics, and priority features. See our <a href="/#pricing">pricing page</a> for full details.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MATCHING -->
+  <div class="faq-section" data-section="matching">
+    <div class="faq-section-title">Matching</div>
+
+    <div class="faq-item" data-cat="matching">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">How does the matching work?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        Our matching engine looks at your business category, target audience (age, gender, geography), what you can offer a partner, and what you're looking for in return. It then suggests businesses that complement yours — meaning they serve a similar audience but don't compete with your products. The goal is always a win-win: both businesses gain meaningful reach with zero wasted spend.
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="matching">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">Will I be matched with competitors?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        Never. Promizio is built specifically around <strong>non-competing</strong> partnerships. We never match two businesses in the same subcategory. A yoga studio will never be matched with another yoga studio — but they might be matched with an organic food brand, a wellness app, or a sustainable clothing brand that serves the same audience.
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="matching">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">Can I be matched with businesses in other countries?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        Yes, especially for e-commerce. If you ship to multiple countries, you can be matched with businesses that serve audiences in those same markets — regardless of where they're based. A Danish e-commerce brand shipping to Sweden can absolutely be matched with a Swedish business whose customers would love Danish products.
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="matching">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">What if I don't like a suggested match?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        No problem — simply decline the suggestion and it won't appear again. Declining a match never affects your profile or your standing on the platform. We use your feedback to improve future suggestions.
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="matching">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">How long does it take to get my first match?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        This depends on how many businesses are on the platform in your category and market. During our early launch phase, matches are curated manually by the Promizio team to ensure quality. As the platform grows, matches become automated and typically appear within 24–48 hours of completing your profile.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CAMPAIGNS -->
+  <div class="faq-section" data-section="campaigns">
+    <div class="faq-section-title">Campaigns</div>
+
+    <div class="faq-item" data-cat="campaigns">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">What types of campaigns can I run?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        Promizio supports several campaign formats: <strong>in-box inserts</strong> (physical flyers, samples, or cards in your partner's parcels), <strong>email newsletter mentions</strong>, <strong>social media shoutouts</strong>, <strong>coupon codes</strong> in packaging or emails, <strong>in-store promotions</strong>, <strong>backlinks</strong> between websites, and <strong>co-branded blog posts or content</strong>. You choose what you're comfortable offering and what you'd like in return.
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="campaigns">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">Can I run different campaigns with different partners?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        Absolutely. Each campaign is completely independent. You could run an in-box insert campaign with a men's clothing brand while simultaneously running a newsletter campaign with a women's lifestyle brand. Each has its own terms, timeline, and tracking — they don't affect each other.
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="campaigns">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">Do both businesses have to agree before a campaign goes live?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        Yes, always. Both businesses propose their terms independently, Promizio shows the combined proposal to both parties, and <strong>both must approve before anything goes live</strong>. Neither business can be enrolled in a campaign without explicitly accepting it. If either side wants to change the terms, they can request adjustments before approving.
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="campaigns">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">How is performance tracked?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        Each campaign gets unique QR codes and coupon codes that are tracked in real time. Your dashboard shows reach (how many people were exposed to the promotion), redemptions (how many acted on it), and estimated revenue lift. For in-box campaigns, tracking is based on QR scans. For email and social campaigns, tracking is based on link clicks and coupon redemptions.
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="campaigns">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">What if my partner doesn't fulfil their side of the campaign?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        We take campaign fulfilment seriously. If a partner doesn't deliver on agreed terms, you can report the issue through your dashboard. Businesses with a pattern of non-fulfilment are reviewed and may be suspended from the platform. We're also building a trust and verification system that gives extra visibility to businesses with a strong track record.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PRICING -->
+  <div class="faq-section" data-section="pricing">
+    <div class="faq-section-title">Pricing</div>
+
+    <div class="faq-item" data-cat="pricing">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">What's included in the free Starter plan?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        The Starter plan is free forever and includes up to 3 matches per month, access to the basic campaign builder, in-box and digital campaign formats, and community support. It's designed for businesses just getting started with cross-promotion. When you're ready to scale, you can upgrade to Growth or Pro at any time.
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="pricing">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">Can I cancel my subscription at any time?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        Yes. There are no long-term contracts. You can cancel your paid subscription at any time from your account settings. You'll keep access to paid features until the end of your current billing period, then automatically move to the free Starter plan.
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="pricing">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">Do you offer annual billing?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        Yes. Annual billing gives you approximately 20% off compared to monthly. Growth annually is €470 (vs €588 monthly) and Pro annually is €1,430 (vs €1,788 monthly). Annual plans are billed upfront and are non-refundable after the first 14 days.
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="pricing">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">Are there any hidden fees or commissions?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        No hidden fees. Subscription prices are exactly what you pay. We do offer an optional <strong>performance commission model</strong> as an alternative to subscriptions — where instead of a monthly fee, you pay 8–12% of revenue tracked through Promizio campaigns. This is entirely optional and suitable for businesses who prefer to pay only on results.
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="pricing">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">Is VAT included in the prices?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        Prices shown are exclusive of VAT. VAT will be added at checkout where applicable based on your location and business registration status. EU VAT rules apply.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TRUST & SAFETY -->
+  <div class="faq-section" data-section="trust">
+    <div class="faq-section-title">Trust & safety</div>
+
+    <div class="faq-item" data-cat="trust">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">How do I know a matched business is legitimate?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        All businesses go through a basic onboarding review before being made available for matching. We also offer a <strong>Verified badge</strong> for businesses that want to go through additional verification — confirming their business registration, audience claims, and fulfilment history. Verified businesses appear more prominently in match suggestions.
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="trust">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">Who can see my business profile?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        Your business name, category, description, and promotion preferences are visible to potential matches on the platform. Your personal contact details (email, phone) are never shared without your explicit consent. You control what you share directly with a partner once a match is confirmed.
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="trust">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">How is my data protected?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        Promizio is fully GDPR compliant. Your data is stored securely in EU-based servers, encrypted in transit and at rest, and never sold to third parties. You can request deletion of all your data at any time. Full details are in our <a href="/privacy.html">Privacy Policy</a>.
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="trust">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">Can I block a business from seeing my profile?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        Yes. You can decline any match suggestion and that business will not be shown your profile again. If you have a specific concern about a business on the platform, you can report them through your dashboard and our team will review the case.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TECHNICAL -->
+  <div class="faq-section" data-section="technical">
+    <div class="faq-section-title">Technical</div>
+
+    <div class="faq-item" data-cat="technical">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">Do I need to install anything to use Promizio?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        No. Promizio is entirely web-based. You access everything through your browser at promizio.com — no downloads, no plugins, no app required. It works on desktop, tablet, and mobile.
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="technical">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">Does Promizio integrate with my e-commerce platform?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        Direct integrations with Shopify, WooCommerce, and other platforms are on our roadmap. For now, campaign tracking works through unique QR codes and coupon codes that you implement manually in your orders or emails. This takes less than 5 minutes to set up per campaign.
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="technical">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">What happens to my data if I delete my account?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        Your business profile and personal data are permanently deleted within 30 days of account deletion. Billing records are retained for 5 years as required by Danish bookkeeping law. Anonymised, aggregated data (with no link to you personally) may be retained for platform analytics.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-box">
+    <h2>Still have questions?</h2>
+    <p>We're happy to help. Reach out and we'll get back to you within one business day.</p>
+    <a href="mailto:hello@promizio.com" class="btn-cta">Email us →</a>
+    <p class="still-stuck">Or <a href="/signup.html">create a free account</a> and explore for yourself.</p>
+  </div>
+
+</main>
+
+<footer>
+  <div class="foot-logo">Promiz<span>io</span></div>
+  <div>
+    <a href="/terms.html">Terms</a> &nbsp;·&nbsp;
+    <a href="/privacy.html">Privacy</a> &nbsp;·&nbsp;
+    <a href="/cookies.html">Cookies</a> &nbsp;·&nbsp;
+    <a href="/faq.html">FAQ</a> &nbsp;·&nbsp;
+    <span>© 2026 Oh So Fab (CVR 27167667)</span>
+  </div>
+</footer>
+
+<script>
+function toggle(qEl) {
+  var item = qEl.closest('.faq-item');
+  var icon = qEl.querySelector('.faq-icon');
+  var isOpen = item.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.faq-item.open').forEach(function(i) {
+    i.classList.remove('open');
+    i.querySelector('.faq-icon').textContent = '+';
+  });
+  // Open this one if it was closed
+  if (!isOpen) {
+    item.classList.add('open');
+    icon.textContent = '×';
+  }
+}
+
+function filterCat(cat, btn) {
+  document.querySelectorAll('.cat-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  document.getElementById('search-input').value = '';
+  var sections = document.querySelectorAll('.faq-section');
+  sections.forEach(function(sec) {
+    var items = sec.querySelectorAll('.faq-item');
+    var visCount = 0;
+    items.forEach(function(item) {
+      var show = cat === 'all' || item.getAttribute('data-cat') === cat;
+      item.style.display = show ? 'block' : 'none';
+      if (show) visCount++;
+    });
+    sec.style.display = (cat === 'all' || sec.getAttribute('data-section') === cat) ? 'block' : 'none';
+  });
+  document.getElementById('no-results').style.display = 'none';
+}
+
+function filterFAQ(query) {
+  var q = query.toLowerCase().trim();
+  document.querySelectorAll('.cat-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.querySelector('.cat-btn').classList.add('active');
+  var totalVisible = 0;
+  document.querySelectorAll('.faq-section').forEach(function(sec) {
+    var secVisible = 0;
+    sec.querySelectorAll('.faq-item').forEach(function(item) {
+      var text = item.textContent.toLowerCase();
+      var show = !q || text.includes(q);
+      item.style.display = show ? 'block' : 'none';
+      if (show) secVisible++;
+    });
+    sec.style.display = secVisible > 0 ? 'block' : 'none';
+    totalVisible += secVisible;
+  });
+  document.getElementById('no-results').style.display = totalVisible === 0 ? 'block' : 'none';
+}
+</script>
+</body>
+</html>
