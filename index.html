@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Promizio — Your audience just got bigger.</title>
+<meta name="description" content="Promizio matches non-competing brands to promote each other's products. Less spend. More reach. Real partners.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;1,300;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:     #0F0F0F;
+  --sage:    #2D6A4F;
+  --sage-lt: #52B788;
+  --sage-bg: #D8F3DC;
+  --warm:    #F9F4EE;
+  --sand:    #E8E0D4;
+  --rust:    #C45C26;
+  --white:   #FFFFFF;
+  --gray:    #6B6B6B;
+  --gray-lt: #A8A8A8;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--warm);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.1rem 2.5rem;
+  background: rgba(15,15,15,0.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.logo {
+  font-family: 'Fraunces', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -0.03em;
+}
+.logo span { color: var(--sage-lt); }
+.nav-links a {
+  color: rgba(255,255,255,0.55);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 400;
+  margin-left: 2rem;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-cta {
+  background: var(--sage) !important;
+  color: var(--white) !important;
+  padding: 0.5rem 1.25rem;
+  border-radius: 100px;
+  font-weight: 500 !important;
+  font-size: 0.85rem !important;
+  margin-left: 2rem !important;
+  transition: background 0.2s !important;
+}
+.nav-cta:hover { background: var(--sage-lt) !important; color: var(--ink) !important; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  background: var(--ink);
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 8rem 2.5rem 5rem;
+  position: relative; overflow: hidden;
+}
+.hero-noise {
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none; opacity: 0.4;
+}
+.hero-glow {
+  position: absolute; top: -200px; right: -200px;
+  width: 700px; height: 700px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(82,183,136,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-inner {
+  max-width: 1100px; margin: 0 auto; width: 100%;
+  display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 5rem; align-items: center;
+}
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--sage-lt);
+  margin-bottom: 1.5rem;
+}
+.hero-tag::before {
+  content: ''; display: block;
+  width: 20px; height: 1px; background: var(--sage-lt);
+}
+h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(3rem, 5.5vw, 5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  color: var(--white);
+  letter-spacing: -0.03em;
+  margin-bottom: 1rem;
+}
+h1 em { font-style: italic; font-weight: 300; color: var(--sage-lt); }
+.hero-sub-tag {
+  font-size: 1rem; font-weight: 400;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.02em;
+  margin-bottom: 2rem;
+}
+.hero-sub-tag span {
+  color: rgba(255,255,255,0.7);
+  font-weight: 500;
+}
+.waitlist-form { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.waitlist-form input {
+  flex: 1; min-width: 220px;
+  padding: 0.9rem 1.25rem;
+  border-radius: 100px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.07);
+  color: var(--white);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.waitlist-form input::placeholder { color: rgba(255,255,255,0.25); }
+.waitlist-form input:focus { border-color: var(--sage-lt); }
+.btn-primary {
+  padding: 0.9rem 1.75rem;
+  background: var(--sage-lt);
+  color: var(--ink);
+  border: none; border-radius: 100px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.9rem; font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.btn-primary:hover { background: var(--white); transform: translateY(-1px); }
+.hero-note { font-size: 0.78rem; color: rgba(255,255,255,0.25); }
+.hero-note strong { color: var(--sage-lt); font-weight: 400; }
+.success-msg { display: none; font-size: 0.9rem; color: var(--sage-lt); font-weight: 500; padding: 0.5rem 0; }
+
+/* Hero right — live match cards */
+.hero-visual { position: relative; padding: 1rem; }
+.match-scene {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 1.5rem;
+}
+.match-label {
+  font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(255,255,255,0.3); margin-bottom: 1rem; font-weight: 500;
+}
+.match-card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px; padding: 1rem 1.1rem;
+  margin-bottom: 0.6rem;
+  animation: float 4s ease-in-out infinite;
+}
+.match-card:nth-child(3) { animation-delay: -2s; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+.match-head { display: flex; align-items: center; gap: 10px; margin-bottom: 0.6rem; }
+.match-icon {
+  width: 34px; height: 34px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0;
+}
+.match-name { font-size: 0.875rem; font-weight: 500; color: var(--white); }
+.match-cat  { font-size: 0.72rem; color: rgba(255,255,255,0.35); }
+.match-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.tag {
+  font-size: 0.68rem; padding: 2px 8px; border-radius: 100px;
+  background: rgba(82,183,136,0.15); color: var(--sage-lt);
+  border: 1px solid rgba(82,183,136,0.25);
+}
+.match-connector {
+  display: flex; align-items: center; justify-content: center;
+  gap: 8px; padding: 0.4rem 0;
+  font-size: 0.72rem; color: rgba(255,255,255,0.25); letter-spacing: 0.05em;
+}
+.match-connector::before, .match-connector::after {
+  content: ''; flex: 1; height: 1px;
+  background: rgba(255,255,255,0.08);
+}
+.overlap-pill {
+  margin-top: 1rem; padding: 0.65rem 1rem;
+  background: rgba(82,183,136,0.12);
+  border: 1px solid rgba(82,183,136,0.2);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.overlap-text { font-size: 0.75rem; color: rgba(255,255,255,0.45); }
+.overlap-num { font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 700; color: var(--sage-lt); }
+
+/* ── STATS STRIP ── */
+.stats {
+  background: var(--ink);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 1.75rem 2.5rem;
+}
+.stats-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1.5rem;
+}
+.stat { text-align: center; }
+.stat strong {
+  display: block;
+  font-family: 'Fraunces', serif;
+  font-size: 1.9rem; font-weight: 700;
+  color: var(--sage-lt);
+  line-height: 1;
+}
+.stat span { font-size: 0.78rem; color: rgba(255,255,255,0.35); margin-top: 3px; display: block; }
+.stat-div { width: 1px; height: 36px; background: rgba(255,255,255,0.08); }
+
+/* ── SECTIONS ── */
+.section { padding: 6rem 2.5rem; }
+.section-inner { max-width: 1100px; margin: 0 auto; }
+.eyebrow {
+  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--sage);
+  margin-bottom: 1rem; display: flex; align-items: center; gap: 8px;
+}
+.eyebrow::before { content: ''; display: block; width: 16px; height: 1px; background: var(--sage); }
+h2 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 700; letter-spacing: -0.03em;
+  line-height: 1.1; margin-bottom: 1rem;
+}
+.section-sub {
+  font-size: 1.05rem; color: var(--gray);
+  line-height: 1.7; max-width: 560px; margin-bottom: 3rem;
+}
+
+/* Pain cards */
+.pain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1rem; }
+.pain-card {
+  background: var(--white);
+  border-radius: 14px; padding: 1.5rem;
+  border-top: 3px solid var(--rust);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  transition: transform 0.2s;
+}
+.pain-card:hover { transform: translateY(-3px); }
+.pain-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.5rem; }
+.pain-card p  { font-size: 0.85rem; color: var(--gray); line-height: 1.6; }
+
+/* How it works */
+.how-section { background: var(--ink); color: var(--white); padding: 6rem 2.5rem; }
+.how-inner   { max-width: 1100px; margin: 0 auto; }
+.how-inner h2 { color: var(--white); }
+.how-inner .section-sub { color: rgba(255,255,255,0.4); }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+.step {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px; padding: 2rem 1.5rem;
+  position: relative; transition: background 0.2s;
+}
+.step:hover { background: rgba(255,255,255,0.07); }
+.step-num {
+  font-family: 'Fraunces', serif;
+  font-size: 2.5rem; font-weight: 700;
+  color: rgba(82,183,136,0.25);
+  line-height: 1; margin-bottom: 1rem;
+}
+.step h3 { font-size: 1.05rem; font-weight: 500; margin-bottom: 0.6rem; color: var(--white); }
+.step p  { font-size: 0.875rem; color: rgba(255,255,255,0.4); line-height: 1.65; }
+
+/* Audience */
+.audience-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.audience-card {
+  background: var(--white); border-radius: 16px; padding: 2rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  transition: transform 0.2s;
+}
+.audience-card:hover { transform: translateY(-4px); }
+.aud-label {
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--sage);
+  margin-bottom: 0.75rem;
+}
+.audience-card h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.4rem; font-weight: 700;
+  letter-spacing: -0.02em; margin-bottom: 0.75rem; line-height: 1.2;
+}
+.audience-card p { font-size: 0.9rem; color: var(--gray); line-height: 1.65; margin-bottom: 1.25rem; }
+.benefit-list { list-style: none; }
+.benefit-list li {
+  font-size: 0.85rem; color: var(--ink);
+  padding: 0.35rem 0 0.35rem 1.2rem; position: relative;
+  border-bottom: 1px solid var(--sand);
+}
+.benefit-list li:last-child { border-bottom: none; }
+.benefit-list li::before {
+  content: ''; position: absolute; left: 0; top: 0.75rem;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--sage-lt);
+}
+
+/* Pricing */
+.pricing-section { background: var(--ink); padding: 6rem 2.5rem; }
+.pricing-inner { max-width: 1100px; margin: 0 auto; }
+.pricing-inner h2 { color: var(--white); }
+.pricing-inner .section-sub { color: rgba(255,255,255,0.4); }
+.pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 3rem; }
+.p-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px; padding: 2rem 1.75rem;
+  transition: transform 0.2s;
+}
+.p-card:hover { transform: translateY(-4px); }
+.p-card.featured {
+  background: var(--sage);
+  border-color: var(--sage);
+  position: relative;
+}
+.p-card.featured::before {
+  content: 'Most popular';
+  position: absolute; top: -0.65rem; left: 50%; transform: translateX(-50%);
+  background: var(--rust); color: var(--white);
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em;
+  padding: 3px 12px; border-radius: 100px; text-transform: uppercase;
+  white-space: nowrap;
+}
+.p-tier { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 0.5rem; }
+.p-card.featured .p-tier { color: rgba(255,255,255,0.7); }
+.p-price {
+  font-family: 'Fraunces', serif;
+  font-size: 2.75rem; font-weight: 700;
+  color: var(--white); line-height: 1; margin-bottom: 0.25rem;
+}
+.p-price sub { font-size: 1rem; vertical-align: baseline; font-weight: 300; }
+.p-period { font-size: 0.78rem; color: rgba(255,255,255,0.3); margin-bottom: 1.5rem; }
+.p-card.featured .p-period { color: rgba(255,255,255,0.6); }
+.p-features { list-style: none; }
+.p-features li {
+  font-size: 0.875rem; color: rgba(255,255,255,0.55);
+  padding: 0.45rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  display: flex; align-items: center; gap: 8px;
+}
+.p-card.featured .p-features li { color: rgba(255,255,255,0.9); border-bottom-color: rgba(255,255,255,0.15); }
+.p-features li::before { content: '✓'; color: var(--sage-lt); font-weight: 600; flex-shrink: 0; font-size: 0.8rem; }
+.p-card.featured .p-features li::before { color: var(--white); }
+
+/* CTA */
+.cta-section { padding: 7rem 2.5rem; text-align: center; background: var(--warm); }
+.cta-section h2 { font-family: 'Fraunces', serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 1rem; }
+.cta-section p  { font-size: 1rem; color: var(--gray); margin-bottom: 2.5rem; }
+.cta-form { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+.cta-form input {
+  padding: 0.9rem 1.5rem; border: 1.5px solid var(--sand);
+  border-radius: 100px; font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.9rem; background: var(--white);
+  outline: none; width: 280px; transition: border-color 0.2s;
+}
+.cta-form input:focus { border-color: var(--sage); }
+.cta-success { display: none; font-size: 0.95rem; color: var(--sage); font-weight: 500; margin-top: 1rem; }
+
+/* Cost breakdown */
+.cost-section { background: var(--white); padding: 4rem 2.5rem; border-top: 1px solid var(--sand); }
+.cost-inner { max-width: 700px; margin: 0 auto; }
+.cost-inner h3 { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+.cost-inner p  { font-size: 0.875rem; color: var(--gray); margin-bottom: 1.5rem; }
+.cost-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+.cost-table th { text-align: left; padding: 0.5rem 0; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gray-lt); border-bottom: 1px solid var(--sand); }
+.cost-table td { padding: 0.75rem 0; border-bottom: 1px solid var(--sand); color: var(--ink); vertical-align: top; }
+.cost-table td:last-child { text-align: right; color: var(--sage); font-weight: 600; }
+.cost-table tr:last-child td { border-bottom: none; font-weight: 600; font-size: 0.95rem; }
+.cost-table tr:last-child td:last-child { color: var(--sage); font-size: 1.1rem; }
+.cost-note { font-size: 0.78rem; color: var(--gray-lt); margin-top: 0.75rem; line-height: 1.6; }
+
+/* Footer */
+footer {
+  background: var(--ink); color: rgba(255,255,255,0.3);
+  padding: 2rem 2.5rem;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 1rem; font-size: 0.78rem;
+}
+.foot-logo { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 700; color: var(--white); }
+.foot-logo span { color: var(--sage-lt); }
+footer a { color: rgba(255,255,255,0.3); text-decoration: none; }
+footer a:hover { color: var(--sage-lt); }
+
+/* Animations */
+.fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-inner, .steps, .audience-grid, .pricing-grid { grid-template-columns: 1fr; }
+  .hero-visual { display: none; }
+  .stats-inner { justify-content: center; }
+  .stat-div { display: none; }
+  .nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Promiz<span>io</span></div>
+  <div class="nav-links">
+    <a href="#how">How it works</a>
+    <a href="#for-you">Who it's for</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#waitlist" class="nav-cta">Join waitlist</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-noise"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div>
+      <p class="hero-tag">Now building · Join the waitlist</p>
+      <h1>Your audience<br>just got <em>bigger.</em></h1>
+      <p class="hero-sub-tag">
+        <span>Less spend. More reach. Real partners.</span>
+      </p>
+      <form class="waitlist-form" onsubmit="submitForm(event,'hero-success')">
+        <input type="email" placeholder="your@email.com" required>
+        <button type="submit" class="btn-primary">Get early access →</button>
+      </form>
+      <p class="success-msg" id="hero-success">You're in. We'll be in touch soon.</p>
+      <p class="hero-note">Free to join. No credit card. <strong>First 100 businesses get lifetime Starter free.</strong></p>
+    </div>
+    <div class="hero-visual">
+      <div class="match-scene">
+        <div class="match-label">AI-matched partners · live preview</div>
+        <div class="match-card">
+          <div class="match-head">
+            <div class="match-icon" style="background:rgba(82,183,136,0.15);">🧘</div>
+            <div>
+              <div class="match-name">YogaStudio CPH</div>
+              <div class="match-cat">Health & Fitness · Copenhagen</div>
+            </div>
+          </div>
+          <div class="match-tags">
+            <span class="tag">Wellness</span>
+            <span class="tag">Women 25–45</span>
+            <span class="tag">DK</span>
+          </div>
+        </div>
+        <div class="match-connector">matched with</div>
+        <div class="match-card">
+          <div class="match-head">
+            <div class="match-icon" style="background:rgba(196,92,38,0.15);">🌿</div>
+            <div>
+              <div class="match-name">Organic Snack Co.</div>
+              <div class="match-cat">E-commerce · Food & Drink</div>
+            </div>
+          </div>
+          <div class="match-tags">
+            <span class="tag">Healthy Living</span>
+            <span class="tag">Women 25–45</span>
+            <span class="tag">DK</span>
+          </div>
+        </div>
+        <div class="overlap-pill">
+          <span class="overlap-text">Audience overlap</span>
+          <span class="overlap-num">91%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-inner">
+    <div class="stat"><strong>€0</strong><span>Ad budget to start</span></div>
+    <div class="stat-div"></div>
+    <div class="stat"><strong>3.2×</strong><span>Higher engagement vs paid ads</span></div>
+    <div class="stat-div"></div>
+    <div class="stat"><strong>5.5M+</strong><span>SMBs in target markets</span></div>
+    <div class="stat-div"></div>
+    <div class="stat"><strong>72%</strong><span>of SMBs say ads deliver less ROI</span></div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="section">
+  <div class="section-inner fade-up">
+    <div class="eyebrow">The problem</div>
+    <h2>Digital ads are getting more expensive and less effective.</h2>
+    <p class="section-sub">Ad costs are up 89%. GDPR killed tracking. Organic reach is dead. The playbook that worked in 2019 no longer does.</p>
+    <div class="pain-grid">
+      <div class="pain-card">
+        <h3>Ad costs up 89%</h3>
+        <p>Meta and Google CPCs have nearly doubled since 2020 — with no improvement in conversion rates.</p>
+      </div>
+      <div class="pain-card">
+        <h3>GDPR killed attribution</h3>
+        <p>Cookie deprecation gutted tracking. You're spending money but can't measure what's working.</p>
+      </div>
+      <div class="pain-card">
+        <h3>Organic reach is dead</h3>
+        <p>Facebook organic reach for business pages is under 2%. You pay to reach people who already follow you.</p>
+      </div>
+      <div class="pain-card">
+        <h3>Ad fatigue is real</h3>
+        <p>The average person sees 6,000–10,000 ads per day. Most are ignored before they're even read.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="how-inner fade-up">
+    <div class="eyebrow" style="color:var(--sage-lt)">How it works</div>
+    <h2>Three steps to your next customer.</h2>
+    <p class="section-sub">No agencies. No media buying. No wasted spend. Two businesses helping each other grow.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Create your profile</h3>
+        <p>Tell us about your business, your customers, and who you'd like to partner with. Under 5 minutes.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>Get matched by AI</h3>
+        <p>Our engine pairs you with complementary businesses that share your audience — without competing with you.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>Launch a campaign</h3>
+        <p>In-box inserts, digital cross-promos, or coupon campaigns. Track reach and revenue lift in real time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO IT'S FOR -->
+<section class="section" id="for-you">
+  <div class="section-inner fade-up">
+    <div class="eyebrow">Who it's for</div>
+    <h2>Built for two kinds of businesses.</h2>
+    <p class="section-sub">Whether you ship parcels or run a local studio, Promizio puts your brand in front of the right people.</p>
+    <div class="audience-grid">
+      <div class="audience-card">
+        <p class="aud-label">E-commerce brands</p>
+        <h3>Turn every parcel into a discovery moment</h3>
+        <p>Include partner offers in every order you ship. Each box becomes a marketing channel — at zero extra cost.</p>
+        <ul class="benefit-list">
+          <li>Reach customers at peak trust — unboxing</li>
+          <li>Zero ad spend, leverage existing logistics</li>
+          <li>Earn by hosting partner inserts in your parcels</li>
+          <li>QR-tracked so you see exactly what converts</li>
+        </ul>
+      </div>
+      <div class="audience-card">
+        <p class="aud-label">Local & service businesses</p>
+        <h3>Partner with the brands your customers already love</h3>
+        <p>Your yoga clients probably order healthy food online. Your coffee regulars visit the bookshop next door. Connect those dots.</p>
+        <ul class="benefit-list">
+          <li>Reach warm audiences through trusted brands</li>
+          <li>High credibility — peer referral over paid ad</li>
+          <li>Email, social, and in-store voucher campaigns</li>
+          <li>No minimum commitment — start with one campaign</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <div class="pricing-inner fade-up">
+    <div class="eyebrow" style="color:var(--sage-lt)">Pricing</div>
+    <h2>Simple plans. No surprises.</h2>
+    <p class="section-sub">Start free. Upgrade when you're ready to grow. Cancel any time.</p>
+    <div class="pricing-grid">
+      <div class="p-card">
+        <p class="p-tier">Starter</p>
+        <p class="p-price">Free</p>
+        <p class="p-period">Always free</p>
+        <ul class="p-features">
+          <li>Up to 3 matches per month</li>
+          <li>Basic campaign builder</li>
+          <li>In-box + digital formats</li>
+          <li>Community support</li>
+        </ul>
+      </div>
+      <div class="p-card featured">
+        <p class="p-tier">Growth</p>
+        <p class="p-price"><sub>€</sub>49</p>
+        <p class="p-period">per month · cancel anytime</p>
+        <ul class="p-features">
+          <li>Unlimited AI matches</li>
+          <li>Full analytics dashboard</li>
+          <li>Email + in-box campaigns</li>
+          <li>Performance tracking</li>
+          <li>Priority support</li>
+        </ul>
+      </div>
+      <div class="p-card">
+        <p class="p-tier">Pro</p>
+        <p class="p-price"><sub>€</sub>149</p>
+        <p class="p-period">per month · cancel anytime</p>
+        <ul class="p-features">
+          <li>Everything in Growth</li>
+          <li>Dedicated account manager</li>
+          <li>Custom matching criteria</li>
+          <li>White-label inserts</li>
+          <li>API access</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="cta-section" id="waitlist">
+  <h2>Ready to grow without the ad spend?</h2>
+  <p>Join the waitlist. First 100 businesses get Starter free — forever.</p>
+  <form class="cta-form" onsubmit="submitForm(event,'cta-success')">
+    <input type="email" placeholder="your@email.com" required>
+    <button type="submit" class="btn-primary">Claim your spot →</button>
+  </form>
+  <p class="cta-success" id="cta-success">You're on the list. Talk soon.</p>
+</section>
+
+<!-- COST BREAKDOWN (for you, Malou — remove before launch or keep as transparency section) -->
+<section class="cost-section">
+  <div class="cost-inner">
+    <h3>Running costs: almost nothing</h3>
+    <p>Here's exactly what Promizio costs to run at launch — keeping it lean until revenue justifies more.</p>
+    <table class="cost-table">
+      <thead>
+        <tr><th>Service</th><th>What it does</th><th>Monthly cost</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Supabase (Free tier)</td><td>Database, auth, storage — up to 500MB + 50K users</td><td>€0</td></tr>
+        <tr><td>Vercel (Hobby)</td><td>Hosting + deployment — unlimited bandwidth</td><td>€0</td></tr>
+        <tr><td>Resend (Free tier)</td><td>Transactional email — 100 emails/day</td><td>€0</td></tr>
+        <tr><td>Stripe</td><td>Payment processing — only costs when you earn</td><td>1.4% + 25¢ per txn</td></tr>
+        <tr><td>promizio.com domain</td><td>Your domain name</td><td>~€1.50</td></tr>
+        <tr><td style="font-weight:600">Total at launch</td><td style="color:var(--gray)">Until ~500 users or €500 MRR</td><td>~€1.50/mo</td></tr>
+      </tbody>
+    </table>
+    <p class="cost-note">When you hit 500 users, Supabase Pro is €25/mo. Vercel Pro is €20/mo. Resend scales at €1.90 per 1000 emails. You'll be well into revenue before any of these kick in.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-logo">Promiz<span>io</span></div>
+  <div>
+    <a href="/cdn-cgi/l/email-protection#d5bdb0b9b9ba95a5a7bab8bcafbcbafbb6bab8"><span class="__cf_email__" data-cfemail="a6cec3cacac9e6d6d4c9cbcfdccfc988c5c9cb">[email&#160;protected]</span></a>
+    &nbsp;·&nbsp;
+    <a href="#">Privacy</a>
+    &nbsp;·&nbsp;
+    <span>© 2026 Promizio</span>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+function submitForm(e, id) {
+  e.preventDefault();
+  const btn = e.target.querySelector('button');
+  btn.textContent = 'Joining...';
+  btn.disabled = true;
+  setTimeout(() => {
+    e.target.style.display = 'none';
+    document.getElementById(id).style.display = 'block';
+  }, 800);
+}
+
+const obs = new IntersectionObserver(entries => {
+  en
