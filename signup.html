@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Promizio — Create your account</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F0F0F'/><text y='.9em' font-size='72' x='12' fill='%2352B788' font-family='serif' font-weight='700'>P</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink:     #0F0F0F;
+  --sage:    #2D6A4F;
+  --sage-lt: #52B788;
+  --sage-bg: #F0FAF4;
+  --warm:    #F9F4EE;
+  --sand:    #E8E0D4;
+  --white:   #FFFFFF;
+  --gray:    #6B6B6B;
+  --gray-lt: #A8A8A8;
+  --red:     #DC2626;
+}
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--warm);
+  color: var(--ink);
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+}
+nav {
+  padding: 1.25rem 2.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--white);
+  border-bottom: 1px solid var(--sand);
+}
+.logo {
+  font-family: 'Fraunces', serif;
+  font-size: 1.4rem; font-weight: 700;
+  color: var(--ink); text-decoration: none;
+  letter-spacing: -0.03em;
+}
+.logo span { color: var(--sage-lt); }
+.nav-link { font-size: 0.875rem; color: var(--gray); text-decoration: none; }
+.nav-link:hover { color: var(--ink); }
+
+main {
+  flex: 1; display: flex; align-items: flex-start; justify-content: center;
+  padding: 2.5rem 2rem;
+}
+.container { width: 100%; max-width: 560px; }
+
+/* Progress steps */
+.progress {
+  display: flex; align-items: center; gap: 0;
+  margin-bottom: 2.5rem;
+}
+.step-dot {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.78rem; font-weight: 500;
+  color: var(--gray-lt);
+}
+.step-dot.active { color: var(--sage); }
+.step-dot.done { color: var(--sage-lt); }
+.dot {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 600;
+  background: var(--sand); color: var(--gray-lt);
+  flex-shrink: 0;
+}
+.step-dot.active .dot { background: var(--sage); color: var(--white); }
+.step-dot.done .dot { background: var(--sage-lt); color: var(--white); }
+.step-line {
+  flex: 1; height: 1px;
+  background: var(--sand); margin: 0 8px;
+}
+.step-line.done { background: var(--sage-lt); }
+
+/* Card */
+.card {
+  background: var(--white);
+  border: 1px solid var(--sand);
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+.card-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.75rem; font-weight: 700;
+  letter-spacing: -0.03em; margin-bottom: 0.4rem;
+}
+.card-sub {
+  font-size: 0.875rem; color: var(--gray);
+  margin-bottom: 2rem; line-height: 1.5;
+}
+.card-sub a { color: var(--sage); text-decoration: none; font-weight: 500; }
+
+/* Fields */
+.field { margin-bottom: 1.25rem; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem; }
+label {
+  display: block; font-size: 0.8rem; font-weight: 600;
+  margin-bottom: 0.4rem; color: var(--ink);
+}
+.label-hint { font-weight: 400; color: var(--gray-lt); margin-left: 4px; }
+input[type="email"],
+input[type="password"],
+input[type="text"],
+input[type="url"],
+input[type="tel"],
+select, textarea {
+  width: 100%; padding: 0.85rem 1rem;
+  border: 1.5px solid var(--sand);
+  border-radius: 10px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.9rem; color: var(--ink);
+  background: var(--white);
+  outline: none; transition: border-color 0.2s;
+  appearance: none;
+}
+input:focus, select:focus, textarea:focus { border-color: var(--sage-lt); }
+textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B6B6B' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+
+/* Checkbox group */
+.check-group { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+.check-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 0.7rem 0.9rem;
+  border: 1.5px solid var(--sand);
+  border-radius: 8px; cursor: pointer;
+  transition: all 0.15s; font-size: 0.85rem;
+  user-select: none;
+}
+.check-item:hover { border-color: var(--sage-lt); background: var(--sage-bg); }
+.check-item.checked { border-color: var(--sage); background: var(--sage-bg); color: var(--sage); font-weight: 500; }
+.check-item input { display: none; }
+
+/* Buttons */
+.btn {
+  width: 100%; padding: 0.9rem;
+  background: var(--sage);
+  color: var(--white);
+  border: none; border-radius: 10px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.95rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+  margin-top: 0.5rem;
+}
+.btn:hover { background: var(--sage-lt); color: var(--ink); }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn-back {
+  width: 100%; padding: 0.9rem;
+  background: transparent;
+  color: var(--gray);
+  border: 1.5px solid var(--sand);
+  border-radius: 10px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.95rem; font-weight: 500;
+  cursor: pointer; transition: all 0.2s;
+  margin-top: 0.75rem;
+}
+.btn-back:hover { border-color: var(--ink); color: var(--ink); }
+
+/* Error */
+.error-msg {
+  display: none; background: #FEF2F2;
+  border: 1px solid #FECACA; border-radius: 8px;
+  padding: 0.75rem 1rem; font-size: 0.85rem;
+  color: var(--red); margin-bottom: 1rem;
+}
+
+/* Step panels */
+.step-panel { display: none; }
+.step-panel.active { display: block; }
+
+/* Password strength */
+.pw-strength { margin-top: 0.4rem; }
+.pw-bars { display: flex; gap: 4px; margin-bottom: 4px; }
+.pw-bar { height: 3px; flex: 1; border-radius: 2px; background: var(--sand); transition: background 0.2s; }
+.pw-label { font-size: 0.72rem; color: var(--gray-lt); }
+
+/* Terms */
+.terms { font-size: 0.78rem; color: var(--gray); margin-top: 1rem; line-height: 1.5; text-align: center; }
+.terms a { color: var(--sage); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">Promiz<span>io</span></a>
+  <a href="/login.html" class="nav-link">Already have an account? Log in</a>
+</nav>
+
+<main>
+  <div class="container">
+
+    <!-- Progress indicator -->
+    <div class="progress">
+      <div class="step-dot active" id="dot-1"><div class="dot">1</div><span>Account</span></div>
+      <div class="step-line" id="line-1"></div>
+      <div class="step-dot" id="dot-2"><div class="dot">2</div><span>Business</span></div>
+      <div class="step-line" id="line-2"></div>
+      <div class="step-dot" id="dot-3"><div class="dot">3</div><span>Audience</span></div>
+      <div class="step-line" id="line-3"></div>
+      <div class="step-dot" id="dot-4"><div class="dot">4</div><span>Done</span></div>
+    </div>
+
+    <div class="card">
+      <div class="error-msg" id="error-msg"></div>
+
+      <!-- ── STEP 1: Account ── -->
+      <div class="step-panel active" id="step-1">
+        <h1 class="card-title">Create your account.</h1>
+        <p class="card-sub">Already have one? <a href="/login.html">Log in here</a></p>
+        <div class="field">
+          <label for="email">Email address</label>
+          <input type="email" id="email" placeholder="you@yourcompany.com" required>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Min. 8 characters" oninput="checkPw(this.value)" required>
+          <div class="pw-strength">
+            <div class="pw-bars">
+              <div class="pw-bar" id="bar1"></div>
+              <div class="pw-bar" id="bar2"></div>
+              <div class="pw-bar" id="bar3"></div>
+              <div class="pw-bar" id="bar4"></div>
+            </div>
+            <span class="pw-label" id="pw-label">Enter a password</span>
+          </div>
+        </div>
+        <button class="btn" onclick="submitStep1()">Continue →</button>
+        <p class="terms">By creating an account you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</p>
+      </div>
+
+      <!-- ── STEP 2: Business info ── -->
+      <div class="step-panel" id="step-2">
+        <h1 class="card-title">Tell us about your business.</h1>
+        <p class="card-sub">This helps us find you the right partners.</p>
+        <div class="field">
+          <label for="biz-name">Business name</label>
+          <input type="text" id="biz-name" placeholder="e.g. YogaStudio Copenhagen">
+        </div>
+        <div class="field-row">
+          <div>
+            <label for="biz-category">Main category</label>
+            <select id="biz-category" onchange="loadSubcategories()">
+              <option value="">Select category...</option>
+            </select>
+          </div>
+          <div>
+            <label for="biz-subcategory">Subcategory</label>
+            <select id="biz-subcategory">
+              <option value="">Select subcategory...</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="biz-type">How do you sell?</label>
+          <select id="biz-type">
+            <option value="local">Local / physical location only</option>
+            <option value="ecommerce">E-commerce / online only</option>
+            <option value="both">Both — physical + online store</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="biz-website">Website <span class="label-hint">(optional)</span></label>
+          <input type="url" id="biz-website" placeholder="https://yourwebsite.com">
+        </div>
+        <div class="field">
+          <label for="biz-desc">Short description <span class="label-hint">(optional)</span></label>
+          <textarea id="biz-desc" placeholder="What do you sell and who are your customers?"></textarea>
+        </div>
+        <button class="btn" onclick="submitStep2()">Continue →</button>
+        <button class="btn-back" onclick="goToStep(1)">← Back</button>
+      </div>
+
+      <!-- ── STEP 3: Audience & promo ── -->
+      <div class="step-panel" id="step-3">
+        <h1 class="card-title">Who are your customers?</h1>
+        <p class="card-sub">We use this to match you with businesses that share your audience.</p>
+        <div class="field-row">
+          <div>
+            <label for="aud-gender">Primary gender</label>
+            <select id="aud-gender">
+              <option value="all">All genders</option>
+              <option value="female">Primarily female</option>
+              <option value="male">Primarily male</option>
+            </select>
+          </div>
+          <div>
+            <label for="aud-country">Primary market</label>
+            <select id="aud-country">
+              <option value="DK">Denmark</option>
+              <option value="SE">Sweden</option>
+              <option value="NO">Norway</option>
+              <option value="FI">Finland</option>
+              <option value="DE">Germany</option>
+              <option value="NL">Netherlands</option>
+              <option value="EU">EU (multiple countries)</option>
+              <option value="GLOBAL">Global</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-row">
+          <div>
+            <label for="age-min">Age range — from</label>
+            <select id="age-min">
+              <option value="18">18</option>
+              <option value="25" selected>25</option>
+              <option value="30">30</option>
+              <option value="35">35</option>
+              <option value="40">40</option>
+              <option value="45">45</option>
+            </select>
+          </div>
+          <div>
+            <label for="age-max">Age range — to</label>
+            <select id="age-max">
+              <option value="35">35</option>
+              <option value="45" selected>45</option>
+              <option value="55">55</option>
+              <option value="65">65</option>
+              <option value="99">65+</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label>How would you like to promote? <span class="label-hint">(select all that apply)</span></label>
+          <div class="check-group">
+            <label class="check-item" onclick="toggleCheck(this)">
+              <input type="checkbox" value="in_box"> 📦 In-box inserts
+            </label>
+            <label class="check-item" onclick="toggleCheck(this)">
+              <input type="checkbox" value="email"> 📧 Email campaigns
+            </label>
+            <label class="check-item" onclick="toggleCheck(this)">
+              <input type="checkbox" value="social"> 📱 Social media
+            </label>
+            <label class="check-item" onclick="toggleCheck(this)">
+              <input type="checkbox" value="coupon"> 🎟️ Coupon / voucher
+            </label>
+          </div>
+        </div>
+        <button class="btn" id="finish-btn" onclick="submitStep3()">Finish setup →</button>
+        <button class="btn-back" onclick="goToStep(2)">← Back</button>
+      </div>
+
+      <!-- ── STEP 4: Done ── -->
+      <div class="step-panel" id="step-4">
+        <div style="text-align:center; padding: 1rem 0;">
+          <div style="font-size:3rem; margin-bottom:1rem;">🎉</div>
+          <h1 class="card-title" style="margin-bottom:0.75rem;">You're all set!</h1>
+          <p style="font-size:0.95rem; color:var(--gray); line-height:1.6; margin-bottom:2rem;">
+            Your business profile is live. We're already looking for your first matches.<br>
+            Head to your dashboard to see what's waiting for you.
+          </p>
+          <a href="/dashboard.html">
+            <button class="btn" style="max-width:280px; margin:0 auto;">Go to dashboard →</button>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<script>
+const SUPABASE_URL = 'https://usewjkpcpionmapqxvoz.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_60i4tQGeBhRNwwtImJ8SRQ_F-9doWcY';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// Redirect if already logged in
+supabase.auth.getSession().then(({ data }) => {
+  if (data.session) window.location.href = '/dashboard.html';
+});
+
+// Categories data
+const categories = {
+  'Fashion & Apparel': ['Women\'s Clothing','Men\'s Clothing','Children\'s Clothing','Activewear & Sports Fashion','Sustainable & Ethical Fashion','Shoes & Footwear','Bags & Accessories','Jewellery & Watches','Lingerie & Swimwear','Vintage & Secondhand'],
+  'Beauty & Personal Care': ['Skincare','Haircare','Makeup & Cosmetics','Natural & Organic Beauty','Perfume & Fragrance','Nail Care','Men\'s Grooming','Beauty Salons & Spas','Tattoo & Piercing'],
+  'Home & Interior': ['Furniture','Lighting & Lamps','Home Décor & Accessories','Textiles & Soft Furnishings','Kitchen & Dining','Bathroom & Wellness','Storage & Organisation','Art & Prints','Plants & Botanicals','Candles & Scents','Sustainable Home Products'],
+  'Food & Drink': ['Organic & Natural Food','Specialty Coffee & Tea','Wine, Beer & Spirits','Chocolate & Confectionery','Snacks & Health Foods','Meal Kits & Subscription Boxes','Bakeries & Pastries','Restaurants & Cafes','Catering & Events','Vegan & Plant-Based','Grocery & Delicatessen'],
+  'Health & Wellness': ['Yoga & Pilates','Gym & Personal Training','Nutrition & Supplements','Mental Health & Therapy','Meditation & Mindfulness','Physiotherapy & Rehabilitation','Alternative Medicine','Dental & Oral Care','Opticians & Eyewear','Pharmacy & Health Products','Massage & Body Treatments','Sleep & Recovery'],
+  'Sports & Outdoors': ['Running & Cycling','Outdoor & Hiking','Water Sports','Team Sports','Fitness Equipment','Golf','Winter Sports','Martial Arts'],
+  'Family & Children': ['Toys & Games','Baby & Toddler Products','Children\'s Books & Education','Maternity & Pregnancy','Childcare & Nurseries','Family Activities & Days Out','School Supplies'],
+  'Pets': ['Dog Products & Services','Cat Products & Services','Pet Food & Nutrition','Veterinary Services','Pet Grooming','Other Pet Care'],
+  'Travel & Experiences': ['Hotels & Accommodation','Travel Agencies & Tours','Experiences & Activities','City Guides & Tourism','Luggage & Travel Accessories','Car Rental & Transport'],
+  'Education & Learning': ['Online Courses & E-learning','Language Learning','Kids\' Education','Professional Development','Tutoring & Coaching','Books & Publishing','Music Lessons & Instruments','Arts & Crafts Classes'],
+  'Creative & Arts': ['Photography','Graphic Design','Illustration & Art','Music & Audio','Film & Video','Writing & Content','Crafts & Handmade Goods','Stationery & Paper Goods'],
+  'Technology & Gadgets': ['Consumer Electronics','Smart Home','Software & Apps','Gaming','Photography Equipment','Accessories & Peripherals'],
+  'Business Services': ['Marketing & Communications','Accounting & Finance','Legal Services','HR & Recruitment','IT & Tech Support','Consulting & Strategy','Printing & Design','Office Supplies','Co-working Spaces'],
+  'Sustainability & Eco': ['Zero Waste Products','Sustainable Fashion','Eco Home & Living','Green Energy','Upcycling & Repair','Ethical & Fair Trade'],
+  'Events & Entertainment': ['Event Planning & Venues','Wedding Services','Party Supplies','Photography & Videography','Entertainment & Performers','Ticketing & Experiences'],
+  'Automotive': ['Car Sales & Leasing','Car Accessories & Parts','Service & Repair','Electric Vehicles','Car Wash & Detailing'],
+  'Real Estate & Home Services': ['Property Sales & Rental','Interior Design & Styling','Cleaning Services','Moving & Storage','Renovation & Construction','Gardening & Landscaping','Security & Smart Home']
+};
+
+// Populate main categories
+const catSelect = document.getElementById('biz-category');
+Object.keys(categories).forEach(cat => {
+  const opt = document.createElement('option');
+  opt.value = cat; opt.textContent = cat;
+  catSelect.appendChild(opt);
+});
+
+function loadSubcategories() {
+  const cat = document.getElementById('biz-category').value;
+  const subSelect = document.getElementById('biz-subcategory');
+  subSelect.innerHTML = '<option value="">Select subcategory...</option>';
+  if (cat && categories[cat]) {
+    categories[cat].forEach(sub => {
+      const opt = document.createElement('option');
+      opt.value = sub; opt.textContent = sub;
+      subSelect.appendChild(opt);
+    });
+  }
+}
+
+function toggleCheck(el) {
+  el.classList.toggle('checked');
+}
+
+function showError(msg) {
+  const el = document.getElementById('error-msg');
+  el.textContent = msg;
+  el.style.display = 'block';
+  el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function hideError() {
+  document.getElementById('error-msg').style.display = 'none';
+}
+
+function goToStep(n) {
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('step-' + n).classList.add('active');
+  hideError();
+  // Update progress dots
+  for (let i = 1; i <= 4; i++) {
+    const dot = document.getElementById('dot-' + i);
+    dot.classList.remove('active', 'done');
+    if (i < n) dot.classList.add('done');
+    if (i === n) dot.classList.add('active');
+  }
+  for (let i = 1; i <= 3; i++) {
+    const line = document.getElementById('line-' + i);
+    line.classList.toggle('done', i < n);
+  }
+  window.scrollTo(0, 0);
+}
+
+function checkPw(val) {
+  const bars = [document.getElementById('bar1'), document.getElementById('bar2'), document.getElementById('bar3'), document.getElementById('bar4')];
+  const label = document.getElementById('pw-label');
+  const colors = ['#DC2626', '#F59E0B', '#3B82F6', '#52B788'];
+  const labels = ['Too short', 'Weak', 'Good', 'Strong'];
+  let score = 0;
+  if (val.length >= 8) score++;
+  if (/[A-Z]/.test(val)) score++;
+  if (/[0-9]/.test(val)) score++;
+  if (/[^A-Za-z0-9]/.test(val)) score++;
+  bars.forEach((bar, i) => {
+    bar.style.background = i < score ? colors[score - 1] : 'var(--sand)';
+  });
+  label.textContent = val.length === 0 ? 'Enter a password' : labels[score - 1] || 'Too short';
+  label.style.color = val.length === 0 ? 'var(--gray-lt)' : colors[score - 1];
+}
+
+// STEP 1: Create auth account
+async function submitStep1() {
+  hideError();
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  if (!email || !password) return showError('Please fill in both fields.');
+  if (password.length < 8) return showError('Password must be at least 8 characters.');
+
+  const btn = document.querySelector('#step-1 .btn');
+  btn.textContent = 'Creating account...'; btn.disabled = true;
+
+  const { error } = await supabase.auth.signUp({ email, password });
+  if (error) {
+    showError(error.message);
+    btn.textContent = 'Continue →'; btn.disabled = false;
+  } else {
+    goToStep(2);
+  }
+}
+
+// STEP 2: Save business info
+async function submitStep2() {
+  hideError();
+  const name = document.getElementById('biz-name').value.trim();
+  const category = document.getElementById('biz-category').value;
+  if (!name) return showError('Please enter your business name.');
+  if (!category) return showError('Please select a category.');
+
+  const btn = document.querySelector('#step-2 .btn');
+  btn.textContent = 'Saving...'; btn.disabled = true;
+
+  const { data: { user } } = await supabase.auth.getUser();
+  const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+  const { error } = await supabase.from('businesses').update({
+    name,
+    slug,
+    category,
+    subcategory: document.getElementById('biz-subcategory').value,
+    business_type: document.getElementById('biz-type').value,
+    website: document.getElementById('biz-website').value.trim(),
+    description: document.getElementById('biz-desc').value.trim(),
+  }).eq('user_id', user.id);
+
+  if (error) {
+    showError('Something went wrong. Please try again.');
+    btn.textContent = 'Continue →'; btn.disabled = false;
+  } else {
+    goToStep(3);
+  }
+}
+
+// STEP 3: Save audience + promo types
+async function submitStep3() {
+  hideError();
+  const promoTypes = Array.from(document.querySelectorAll('.check-item.checked input')).map(i => i.value);
+
+  const btn = document.getElementById('finish-btn');
+  btn.textContent = 'Finishing...'; btn.disabled = true;
+
+  const { data: { user } } = await supabase.auth.getUser();
+
+  const { error } = await supabase.from('businesses').update({
+    target_gender: document.getElementById('aud-gender').value,
+    target_age_min: parseInt(document.getElementById('age-min').value),
+    target_age_max: parseInt(document.getElementById('age-max').value),
+    target_location: document.getElementById('aud-country').value,
+    promo_types: promoTypes,
+    status: 'active',
+    onboarded_at: new Date().toISOString(),
+  }).eq('user_id', user.id);
+
+  if (error) {
+    showError('Something went wrong. Please try again.');
+    btn.textContent = 'Finish setup →'; btn.disabled = false;
+  } else {
+    goToStep(4);
+  }
+}
+</script>
+</body>
+</html>
