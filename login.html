@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Promizio — Log in</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230F0F0F'/><text y='.9em' font-size='72' x='12' fill='%2352B788' font-family='serif' font-weight='700'>P</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--ink:#0F0F0F;--sage:#2D6A4F;--sage-lt:#52B788;--sage-bg:#F0FAF4;--warm:#F9F4EE;--sand:#E8E0D4;--white:#FFFFFF;--gray:#6B6B6B;--red:#DC2626;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--warm);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;}
+nav{padding:1.25rem 2.5rem;display:flex;align-items:center;justify-content:space-between;background:var(--white);border-bottom:1px solid var(--sand);}
+.logo{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-0.03em;}
+.logo span{color:var(--sage-lt);}
+.nav-link{font-size:0.875rem;color:var(--gray);text-decoration:none;}
+.nav-link:hover{color:var(--ink);}
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:2rem;}
+.card{background:var(--white);border:1px solid var(--sand);border-radius:20px;padding:2.5rem;width:100%;max-width:420px;box-shadow:0 4px 24px rgba(0,0,0,0.06);}
+.card-title{font-family:'Fraunces',serif;font-size:1.75rem;font-weight:700;letter-spacing:-0.03em;margin-bottom:0.4rem;}
+.card-sub{font-size:0.875rem;color:var(--gray);margin-bottom:2rem;line-height:1.5;}
+.card-sub a{color:var(--sage);text-decoration:none;font-weight:500;}
+.field{margin-bottom:1.25rem;}
+label{display:block;font-size:0.8rem;font-weight:600;margin-bottom:0.4rem;color:var(--ink);}
+input[type="email"],input[type="password"],input[type="text"]{width:100%;padding:0.85rem 1rem;border:1.5px solid var(--sand);border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.9rem;color:var(--ink);background:var(--white);outline:none;transition:border-color 0.2s;}
+input:focus{border-color:var(--sage-lt);}
+.pw-wrap{position:relative;}
+.pw-wrap input{padding-right:3rem;}
+.pw-toggle{position:absolute;right:1rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;padding:0;color:var(--gray);font-size:1rem;line-height:1;transition:color 0.2s;}
+.pw-toggle:hover{color:var(--ink);}
+.field-footer{display:flex;justify-content:flex-end;margin-top:0.4rem;}
+.forgot{font-size:0.78rem;color:var(--gray);text-decoration:none;}
+.forgot:hover{color:var(--sage);}
+.btn{width:100%;padding:0.9rem;background:var(--sage);color:var(--white);border:none;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.95rem;font-weight:600;cursor:pointer;transition:all 0.2s;margin-top:0.5rem;}
+.btn:hover{background:var(--sage-lt);color:var(--ink);}
+.btn:disabled{opacity:0.6;cursor:not-allowed;}
+.msg{display:none;border-radius:8px;padding:0.75rem 1rem;font-size:0.85rem;margin-bottom:1rem;}
+.msg-error{background:#FEF2F2;border:1px solid #FECACA;color:var(--red);}
+.msg-success{background:var(--sage-bg);border:1px solid rgba(45,106,79,0.2);color:var(--sage);}
+.divider{text-align:center;font-size:0.78rem;color:var(--gray);margin-top:1.5rem;}
+.divider a{color:var(--sage);text-decoration:none;font-weight:500;}
+
+/* Forgot password panel */
+.panel{display:none;}
+.panel.active{display:block;}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">Promiz<span>io</span></a>
+  <a href="/signup.html" class="nav-link">No account? Sign up →</a>
+</nav>
+<main>
+  <div class="card">
+
+    <!-- LOGIN PANEL -->
+    <div class="panel active" id="panel-login">
+      <div class="msg msg-error" id="login-err"></div>
+      <h1 class="card-title">Welcome back.</h1>
+      <p class="card-sub">Don't have an account? <a href="/signup.html">Sign up free</a></p>
+      <div class="field">
+        <label>Email address</label>
+        <input type="email" id="l-email" placeholder="you@yourcompany.com" autocomplete="email">
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <div class="pw-wrap">
+          <input type="password" id="l-pw" placeholder="••••••••" autocomplete="current-password">
+          <button type="button" class="pw-toggle" onclick="togglePw('l-pw',this)">👁</button>
+        </div>
+        <div class="field-footer">
+          <a href="#" class="forgot" onclick="showForgot(event)">Forgot password?</a>
+        </div>
+      </div>
+      <button class="btn" id="l-btn" onclick="doLogin()">Log in</button>
+      <p class="divider">New to Promizio? <a href="/signup.html">Create a free account</a></p>
+    </div>
+
+    <!-- FORGOT PASSWORD PANEL -->
+    <div class="panel" id="panel-forgot">
+      <div class="msg msg-error"   id="forgot-err"></div>
+      <div class="msg msg-success" id="forgot-ok"></div>
+      <h1 class="card-title">Reset your password.</h1>
+      <p class="card-sub">Enter your email and we'll send you a reset link.</p>
+      <div class="field">
+        <label>Email address</label>
+        <input type="email" id="f-email" placeholder="you@yourcompany.com" autocomplete="email">
+      </div>
+      <button class="btn" id="f-btn" onclick="doForgot()">Send reset link</button>
+      <p style="text-align:center;margin-top:1rem;font-size:0.78rem;">
+        <a href="#" style="color:var(--gray);text-decoration:none;" onclick="showLogin(event)">← Back to login</a>
+      </p>
+    </div>
+
+  </div>
+</main>
+
+<script>
+var SB_URL='https://usewjkpcpionmapqxvoz.supabase.co';
+var SB_KEY='sb_publishable_60i4tQGeBhRNwwtImJ8SRQ_F-9doWcY';
+var sb;
+
+(function(){
+  var s=document.createElement('script');
+  s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js';
+  s.onload=function(){
+    sb=window.supabase.createClient(SB_URL,SB_KEY);
+    sb.auth.getSession().then(function(r){
+      if(r.data&&r.data.session) window.location.href='/dashboard.html';
+    });
+  };
+  document.head.appendChild(s);
+})();
+
+function togglePw(id,btn){
+  var i=document.getElementById(id);
+  i.type=i.type==='password'?'text':'password';
+  btn.textContent=i.type==='password'?'👁':'🙈';
+}
+
+function showForgot(e){e.preventDefault();document.getElementById('panel-login').classList.remove('active');document.getElementById('panel-forgot').classList.add('active');}
+function showLogin(e){e.preventDefault();document.getElementById('panel-forgot').classList.remove('active');document.getElementById('panel-login').classList.add('active');}
+
+async function doLogin(){
+  var err=document.getElementById('login-err'); err.style.display='none';
+  if(!sb){err.textContent='Still loading — please try again.';err.style.display='block';return;}
+  var email=document.getElementById('l-email').value.trim();
+  var pw=document.getElementById('l-pw').value;
+  if(!email||!pw){err.textContent='Please enter your email and password.';err.style.display='block';return;}
+  var btn=document.getElementById('l-btn'); btn.textContent='Logging in...'; btn.disabled=true;
+  try{
+    var r=await sb.auth.signInWithPassword({email:email,password:pw});
+    if(r.error){err.textContent='Incorrect email or password. Please try again.';err.style.display='block';btn.textContent='Log in';btn.disabled=false;return;}
+    window.location.href='/dashboard.html';
+  }catch(e){err.textContent='Something went wrong: '+e.message;err.style.display='block';btn.textContent='Log in';btn.disabled=false;}
+}
+
+async function doForgot(){
+  var err=document.getElementById('forgot-err'); err.style.display='none';
+  var ok=document.getElementById('forgot-ok');   ok.style.display='none';
+  if(!sb){err.textContent='Still loading — please try again.';err.style.display='block';return;}
+  var email=document.getElementById('f-email').value.trim();
+  if(!email||!email.includes('@')){err.textContent='Please enter a valid email address.';err.style.display='block';return;}
+  var btn=document.getElementById('f-btn'); btn.textContent='Sending...'; btn.disabled=true;
+  try{
+    var r=await sb.auth.resetPasswordForEmail(email,{redirectTo:'https://promizio.com/reset.html'});
+    if(r.error){err.textContent=r.error.message;err.style.display='block';btn.textContent='Send reset link';btn.disabled=false;return;}
+    ok.textContent='Reset link sent! Check your email inbox.';
+    ok.style.display='block';
+    btn.textContent='Send reset link'; btn.disabled=false;
+  }catch(e){err.textContent='Something went wrong: '+e.message;err.style.display='block';btn.textContent='Send reset link';btn.disabled=false;}
+}
+
+document.addEventListener('keydown',function(e){
+  if(e.key==='Enter'){
+    if(document.getElementById('panel-login').classList.contains('active')) doLogin();
+    if(document.getElementById('panel-forgot').classList.contains('active')) doForgot();
+  }
+});
+</script>
+</body>
+</html>
